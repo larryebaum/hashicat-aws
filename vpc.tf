@@ -1,5 +1,5 @@
 module "vpc" {
-  source  = "app.terraform.io/larryebaum-dpg/vpc/aws"
+  source  = "app.terraform.io/larryebaum-demo/vpc/aws"
   version = "2.21.0"
 
   name = "my-vpc"
@@ -15,5 +15,7 @@ module "vpc" {
   tags = {
     Terraform = "true"
     Environment = "dev"
+    Name = "${var.prefix}-module-vpc"
+
   }
 }
