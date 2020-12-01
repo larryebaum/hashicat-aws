@@ -72,11 +72,18 @@ resource aws_security_group "hashicat" {
     cidr_blocks     = ["0.0.0.0/0"]
     prefix_list_ids = []
   }
-  tags = {
-    local.common_tags
-    Name = "${var.prefix}-security-group"
-  }
-}
+  tags = "${merge(
+    local.common_tags,
+    map(
+      "Name", "${var.prefix}-security-group"
+    )
+  )}"  
+  
+#   tags = {
+#     local.common_tags
+#     Name = "${var.prefix}-security-group"
+#   }
+# }
 
 resource random_id "app-server-id" {
   prefix = "${var.prefix}-hashicat-"
@@ -85,10 +92,16 @@ resource random_id "app-server-id" {
 
 resource aws_internet_gateway "hashicat" {
   vpc_id = aws_vpc.hashicat.id
-  tags = {
-    local.common_logs
-    Name = "${var.prefix}-internet-gateway"
-  }
+  tags = "${merge(
+    local.common_tags,
+    map(
+      "Name", "${var.prefix}-internet-gateway"
+    )
+  )}"
+  #   tags = {
+#     local.common_logs
+#     Name = "${var.prefix}-internet-gateway"
+#   }
 }
 
 resource aws_route_table "hashicat" {
@@ -128,10 +141,16 @@ resource aws_instance "hashicat" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.hashicat.id
   vpc_security_group_ids      = [aws_security_group.hashicat.id]
-  tags = {
-    local.common_tags
-    Name = "${var.prefix}-hashicat-instance"
-  }
+  tags = "${merge(
+    local.common_tags,
+    map(
+      "Name", "${var.prefix}-hashicat-instance"
+    )
+  )}"
+  #   tags = {
+#     local.common_tags
+#     Name = "${var.prefix}-hashicat-instance"
+#   }
 }
 
 # We're using a little trick here so we can run the provisioner without
