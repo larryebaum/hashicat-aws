@@ -83,7 +83,7 @@ resource aws_security_group "hashicat" {
 #     local.common_tags
 #     Name = "${var.prefix}-security-group"
 #   }
-# }
+ }
 
 resource random_id "app-server-id" {
   prefix = "${var.prefix}-hashicat-"
