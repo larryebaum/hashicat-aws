@@ -14,7 +14,6 @@ locals {
     customer = var.customer
     tfe-workspace = var.tfe_workspace
     lifecycle-action = var.lifecycle_action
-    private_key_filename = "${var.prefix}-ssh-key.pem"
   }
 }
 
@@ -220,5 +219,6 @@ resource tls_private_key "hashicat" {
 resource aws_key_pair "hashicat" {
   key_name   = local.private_key_filename
   public_key = tls_private_key.hashicat.public_key_openssh
+  private_key_filename = "${var.prefix}-ssh-key.pem"
 }
 
