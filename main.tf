@@ -3,6 +3,23 @@ provider "aws" {
   region  = var.region
 }
 
+locals {
+  common_tags = {
+    owner = var.owner
+    se-region = var.se_region
+    purpose = var.purpose
+    ttl = var.ttl #-1 must has justification as purpose
+    terraform = var.terraform
+    creator = var.name
+    customer = var.customer
+    tfe-workspace = var.tfe_workspace
+    lifecycle-action = var.lifecycle_action
+    Name = "${var.owner}-{var.purpose}-{var.customer}" 
+    private_key_filename = "${var.prefix}-ssh-key.pem"
+
+  }
+}
+
 resource aws_vpc "hashicat" {
   cidr_block           = var.address_space
   enable_dns_hostnames = true
@@ -17,7 +34,7 @@ resource aws_subnet "hashicat" {
   cidr_block = var.subnet_prefix
   tags = {
     local.common_tags
-    name = "${var.prefix}-subnet"
+    Name = "${var.prefix}-subnet"
   }
 }
 
@@ -173,10 +190,6 @@ resource "null_resource" "configure-cat-app" {
 
 resource tls_private_key "hashicat" {
   algorithm = "RSA"
-}
-
-locals {
-  private_key_filename = "${var.prefix}-ssh-key.pem"
 }
 
 resource aws_key_pair "hashicat" {
