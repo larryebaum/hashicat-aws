@@ -216,6 +216,10 @@ resource tls_private_key "hashicat" {
   algorithm = "RSA"
 }
 
+locals {
+  private_key_filename = "${random_id.app-server-id.dec}-ssh-key.pem"
+}
+
 resource aws_key_pair "hashicat" {
   key_name   = local.private_key_filename
   public_key = tls_private_key.hashicat.public_key_openssh
