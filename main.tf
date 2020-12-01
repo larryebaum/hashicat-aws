@@ -26,10 +26,6 @@ resource aws_vpc "hashicat" {
       "Name", "${var.prefix}-subnet"
     )
   )}"
-#  tags = local.common_tags
-#  tags = {
-#    Name = "${var.prefix}-vpc"
-#  }
 }
 
 resource aws_subnet "hashicat" {
@@ -77,11 +73,6 @@ resource aws_security_group "hashicat" {
       "Name", "${var.prefix}-security-group"
     )
   )}"  
-  
-#   tags = {
-#     local.common_tags
-#     Name = "${var.prefix}-security-group"
-#   }
  }
 
 resource random_id "app-server-id" {
@@ -97,10 +88,6 @@ resource aws_internet_gateway "hashicat" {
       "Name", "${var.prefix}-internet-gateway"
     )
   )}"
-  #   tags = {
-#     local.common_logs
-#     Name = "${var.prefix}-internet-gateway"
-#   }
 }
 
 resource aws_route_table "hashicat" {
@@ -146,10 +133,6 @@ resource aws_instance "hashicat" {
       "Name", "${var.prefix}-hashicat-instance"
     )
   )}"
-  #   tags = {
-#     local.common_tags
-#     Name = "${var.prefix}-hashicat-instance"
-#   }
 }
 
 # We're using a little trick here so we can run the provisioner without
