@@ -14,9 +14,7 @@ locals {
     customer = var.customer
     tfe-workspace = var.tfe_workspace
     lifecycle-action = var.lifecycle_action
-    Name = "${var.owner}-{var.purpose}-{var.customer}" 
     private_key_filename = "${var.prefix}-ssh-key.pem"
-
   }
 }
 
