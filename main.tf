@@ -21,19 +21,27 @@ locals {
 resource aws_vpc "hashicat" {
   cidr_block           = var.address_space
   enable_dns_hostnames = true
-  tags = local.common_tags
-  tags = {
-    Name = "${var.prefix}-vpc"
-  }
+  tags = "${merge(
+    local.common_tags,
+    map(
+      "Name", "${var.prefix}-subnet"
+    )
+  )}"
+#  tags = local.common_tags
+#  tags = {
+#    Name = "${var.prefix}-vpc"
+#  }
 }
 
 resource aws_subnet "hashicat" {
   vpc_id     = aws_vpc.hashicat.id
   cidr_block = var.subnet_prefix
-  tags = {
-    local.common_tags
-    Name = "${var.prefix}-subnet"
-  }
+  tags = "${merge(
+    local.common_tags,
+    map(
+      "Name", "${var.prefix}-subnet"
+    )
+  )}"
 }
 
 resource aws_security_group "hashicat" {
